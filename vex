@@ -1,0 +1,34 @@
+USEFULL VEX LINES OF CODE : 
+
+1 - SCATTERING USING PRIMITIVE CENTER :
+
+int newpt = addpoint(0,v@P);
+setpointgroup(0,'new',newpt,1);
+setpointattrib(0,'N',newpt,v@N);
+
+int npts[]=primpoints(0,@primnum);
+
+vector pos1 = point(0,'P',npts[0]);
+vector pos2 = point(0,'P',npts[1]);
+
+vector up = normalize(pos1-pos2);
+setpointattrib(0,'up',newpt,up);
+
+float avgdist = 0.0;
+
+foreach(int npt;npts)
+{
+    vector nppos = point(0,'P',npt);
+    float mydist = distance(v@P,nppos);
+    avgdist += mydist;
+}
+
+float n = len(npts);
+avgdist /= n;
+f@pscale = avgdist;
+setpointattrib(0,'pscale',newpt,avgdist);
+
+2 - NORMALS POINTING AWAY FROM CENTER GEO :
+
+vector a = set(0,0,0);
+@N = normalize(a+@P);
